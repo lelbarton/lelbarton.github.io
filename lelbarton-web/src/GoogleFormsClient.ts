@@ -1,3 +1,4 @@
+import useScript from "react-script-hook";
 
 const FORM_ID = '1w9fOFF0mFcBWlrCWAqwWbrtrRGJG_5sl-vDwDZXmj2k'
 const GOOGLE_FORM_URL = `https://forms.googleapis.com/v1/forms/${FORM_ID}/responses`
@@ -6,6 +7,8 @@ export class GoogleFormsClient {
 
   public async getAllResponses() {
     // https://forms.googleapis.com/v1/forms/{formId}
+
+    // const [loading, error] = useScript({ src: 'https://js.stripe.com/v3/' });
     const response = await fetch(GOOGLE_FORM_URL, {
       headers: {
         "X-goog-api-key": "TODO"
