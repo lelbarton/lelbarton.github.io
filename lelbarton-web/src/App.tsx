@@ -1,6 +1,7 @@
 import React from 'react';
 import './App.css';
 import { ResultsBoard } from "./ResultsBoard";
+import {GoogleOAuthProvider} from "@react-oauth/google";
 
 function App() {
   return (
@@ -17,7 +18,13 @@ function App() {
     //     </a>
     //   </header>
     <div>
-        <ResultsBoard/>
+        <GoogleOAuthProvider
+            clientId={"291371917046-0lru68gqc0takso9i7hvadp42cjg3lf2.apps.googleusercontent.com"}
+
+        >
+
+            <ResultsBoard/>
+        </GoogleOAuthProvider>
     </div>
     // </div>
   );
