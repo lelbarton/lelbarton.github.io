@@ -25,7 +25,7 @@ export function CocktailTable({ accessToken, refreshMs }: CocktailTableProps) {
         'discoveryDocs': ['https://forms.googleapis.com/$discovery/rest?version=v1', 'https://sheets.googleapis.com/$discovery/rest?version=v4'],
       });
 
-      const interval = setInterval(async () => {
+      const interval = setIntervalAndExecute(async () => {
         const formsResponse = await gapi.client.forms.forms.responses.list({
           access_token: accessToken,
           formId: FORM_ID,
@@ -113,4 +113,9 @@ export function CocktailTable({ accessToken, refreshMs }: CocktailTableProps) {
       </table>
     </div>
   );
+}
+
+function setIntervalAndExecute<T>(fn: () => T, interval: number) {
+  fn();
+  return setInterval(fn, interval);
 }
