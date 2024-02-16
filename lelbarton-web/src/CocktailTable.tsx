@@ -17,7 +17,7 @@ interface CocktailEntry {
 
 export function CocktailTable({ accessToken, refreshMs }: CocktailTableProps) {
   const [ratings, setRatings] = useState<CocktailEntry[] | undefined>([])
-  const [tableHeaders, setCategories] = useState<string[] | undefined>([])
+  const [categories, setCategories] = useState<string[] | undefined>([])
 
   useEffect(() => {
     const start = async () => {
@@ -94,7 +94,7 @@ export function CocktailTable({ accessToken, refreshMs }: CocktailTableProps) {
         <tr>
           <th className="cocktail-table-th">Creator</th>
           <th>Cocktail Name</th>
-          {tableHeaders?.map((header) => {
+          {categories?.map((header) => {
             return <th>{header}</th>
           })}
         </tr>
@@ -104,7 +104,7 @@ export function CocktailTable({ accessToken, refreshMs }: CocktailTableProps) {
           return <tr>
             <td>{cocktailEntry.creator}</td>
             <td>{cocktailEntry.cocktailName}</td>
-            {cocktailEntry.ratings.map((rating) => {
+            {(cocktailEntry.ratings.length > 0 ? cocktailEntry.ratings : Array(categories!!.length).fill('')).map((rating) => {
               return <td>{rating}</td>
             })}
           </tr>

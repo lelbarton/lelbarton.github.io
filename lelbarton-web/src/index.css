@@ -25,21 +25,22 @@ code {
     font-family: Arial, Helvetica, sans-serif;
     width: 100%;
     border-collapse: collapse;
+    empty-cells: show;
 }
 
 #cocktail-table td, #cocktail-table th {
-    border: 1px solid #1D0673;
+    border: 1px solid #0442BF;
     padding: 8px;
 }
 
-#cocktail-table tr:nth-child(even){background-color: #c4b5fb}
-#cocktail-table tr:nth-child(odd){background-color: #f0ecfe}
+#cocktail-table tr:nth-child(even){background-color: #c1d5fe}
+#cocktail-table tr:nth-child(odd){background-color: #f0f5ff}
 
 #cocktail-table th {
     padding-top: 12px;
     padding-bottom: 12px;
     text-align: left;
-    background-color: #1D0673;
+    background-color: #0442BF;
     color: white;
 }
 
