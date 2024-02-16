@@ -11,6 +11,7 @@
     "@types/gapi": "^0.0.47",
     "@types/gapi.auth2": "^0.0.60",
     "@types/gapi.client.forms": "^1.0.2",
+    "@types/gapi.client.sheets": "^4.0.20201031",
     "@types/google.accounts": "^0.0.14",
     "@types/jest": "^27.5.2",
     "@types/node": "^16.18.80",

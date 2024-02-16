@@ -1,13 +1,70 @@
 body {
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    margin: 0;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
     'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
     sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    background-image: url('../public/double_cocktail.jpg');
+    background-size: cover;
 }
 
 code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+    font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
+}
+
+.bottom-right {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+}
+
+#cocktail-table {
+    margin-top: 50px;
+    font-family: Arial, Helvetica, sans-serif;
+    width: 100%;
+    border-collapse: collapse;
+}
+
+#cocktail-table td, #cocktail-table th {
+    border: 1px solid #15a3e7;
+    padding: 8px;
+}
+
+#cocktail-table tr:nth-child(even){background-color: #a0dbf6}
+#cocktail-table tr:nth-child(odd){background-color: #e0f3fc}
+
+#cocktail-table th {
+    padding-top: 12px;
+    padding-bottom: 12px;
+    text-align: left;
+    background-color: #15a3e7;
+    color: white;
+}
+
+.qr-code-col {
+    position: absolute;
+    text-align: center;
+    padding-left: 50px;
+    left: 0;
+    bottom: 0;
+    margin-bottom: 50px;
+}
+
+.qr-code-text {
+    padding: 0 78px;
+    margin-bottom: 0;
+    font-size: 24px;
+    font-family: "Bradley Hand", cursive;
+    font-weight: bolder;
+    color: white;
+}
+
+.qr-code {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: 50%;
+    padding-left: 50px;
 }

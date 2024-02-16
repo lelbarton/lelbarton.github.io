@@ -1,83 +1,116 @@
 import { Table } from "react-bootstrap";
-import {useEffect, useState} from "react";
+import { useEffect, useState } from "react";
 
 const FORM_ID = '1w9fOFF0mFcBWlrCWAqwWbrtrRGJG_5sl-vDwDZXmj2k'
-// const GOOGLE_FORM_URL = `https://forms.googleapis.com/v1/forms/${FORM_ID}/responses`
+const SPREADSHEET_ID = '1X_JQ2lXUiSUjictPKL-QBdr6ZlByCUyGjASip4C-a70'
 
 export interface CocktailTableProps {
-    accessToken: string
+  accessToken: string;
+  refreshMs: number;
 }
 
-export function CocktailTable({accessToken} : CocktailTableProps) {
-    const [rows, setRows] = useState<any | undefined>(undefined)
+interface CocktailEntry {
+  creator: string;
+  cocktailName: string;
+  ratings: string[]
+}
 
+export function CocktailTable({ accessToken, refreshMs }: CocktailTableProps) {
+  const [ratings, setRatings] = useState<CocktailEntry[] | undefined>([])
+  const [tableHeaders, setCategories] = useState<string[] | undefined>([])
 
-    useEffect(() => {
-        const start = async () => {
-            await gapi.client.init({
-                'discoveryDocs': ['https://forms.googleapis.com/$discovery/rest?version=v1'],
-            });
+  useEffect(() => {
+    const start = async () => {
+      await gapi.client.init({
+        'discoveryDocs': ['https://forms.googleapis.com/$discovery/rest?version=v1', 'https://sheets.googleapis.com/$discovery/rest?version=v4'],
+      });
 
+      const interval = setInterval(async () => {
+        const formsResponse = await gapi.client.forms.forms.responses.list({
+          access_token: accessToken,
+          formId: FORM_ID,
+        })
 
-            const response = await gapi.client.forms.forms.responses.list({
-                access_token: accessToken,
-                formId: FORM_ID,
+        console.log(JSON.stringify(formsResponse.result));
+
+        formsResponse.result.responses?.sort((a, b): number => {
+          return Date.parse(a.createTime!!) - Date.parse(b.createTime!!)
+        })
+
+        const entries = formsResponse.result.responses?.map((response): CocktailEntry => {
+          return {
+            // We should be able to do answers.values instead of knowing the question ids, but oh well
+            creator: response.answers!!['58a06c7d'].textAnswers!!.answers!!.at(0)!!.value!!,
+            cocktailName: response.answers!!['4df2cd05'].textAnswers!!.answers!!.at(0)!!.value!!,
+            ratings: []
+          }
+        });
+
+        await gapi.client.sheets.spreadsheets.values.update({
+          access_token: accessToken,
+          spreadsheetId: SPREADSHEET_ID,
+          range: 'Sheet1!A2:B100',
+          valueInputOption: 'USER_ENTERED',
+          resource: {
+            majorDimension: 'ROWS',
+            values: entries?.map((entry) => {
+              return [entry.creator, entry.cocktailName]
             })
+          }
+        })
 
-            console.log(response)
-            setRows(response)
+        const ratings = await gapi.client.sheets.spreadsheets.values.get({
+          access_token: accessToken,
+          spreadsheetId: SPREADSHEET_ID,
+          range: 'A:M',
+          majorDimension: 'ROWS',
+          valueRenderOption: 'FORMATTED_VALUE'
+        })
 
-        }
+        console.log(JSON.stringify(ratings.result));
 
-        gapi.load('client', start);
+        setCategories(ratings.result.values!!.at(0)!!.slice(2))
+        const currentRatings = ratings.result.values?.slice(1).map((row): CocktailEntry => {
+          return {
+            creator: row.at(0),
+            cocktailName: row.at(1),
+            ratings: row.slice(2)
+          }
+        });
+        setRatings(currentRatings)
+      }, refreshMs)
 
-    }, []);
+      return () => clearInterval(interval);
+    };
 
-return (
-    <>
-        <code>{JSON.stringify(rows)}</code>
-      <Table striped bordered>
+    gapi.load('client', start);
+
+  }, []);
+
+  return (
+    <div>
+      <table id='cocktail-table'>
         <thead>
         <tr>
-          <th>Creator</th>
+          <th className="cocktail-table-th">Creator</th>
           <th>Cocktail Name</th>
-          <th>Taste</th>
-          <th>Appearance</th>
-          <th>Overall Score</th>
+          {tableHeaders?.map((header) => {
+            return <th>{header}</th>
+          })}
         </tr>
         </thead>
         <tbody>
-        <tr>
-          <td>Me</td>
-          <td>Speach</td>
-          <td>TBD</td>
-          <td>TBD</td>
-          <td>TBD</td>
-        </tr>
-        <tr>
-          <td>Me2</td>
-          <td>Speach2</td>
-          <td>TBD</td>
-          <td>TBD</td>
-          <td>TBD</td>
-        </tr>
+        {ratings?.map((cocktailEntry) => {
+          return <tr>
+            <td>{cocktailEntry.creator}</td>
+            <td>{cocktailEntry.cocktailName}</td>
+            {cocktailEntry.ratings.map((rating) => {
+              return <td>{rating}</td>
+            })}
+          </tr>
+        })}
         </tbody>
-      </Table>
-    </>
-);
+      </table>
+    </div>
+  );
 }
-
-//
-// componentDidMount() {
-//   this.timer = setInterval(()=> this.getItems(), 1000);
-// }
-//
-// componentWillUnmount() {
-//   this.timer = null; // here...
-// }
-//
-// getItems() {
-//   fetch(this.getEndpoint('api url endpoint'))
-//     .then(result => result.json())
-//     .then(result => this.setState({ items: result }));
-// }
