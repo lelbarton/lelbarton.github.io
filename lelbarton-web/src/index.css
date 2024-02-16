@@ -28,18 +28,18 @@ code {
 }
 
 #cocktail-table td, #cocktail-table th {
-    border: 1px solid #15a3e7;
+    border: 1px solid #1D0673;
     padding: 8px;
 }
 
-#cocktail-table tr:nth-child(even){background-color: #a0dbf6}
-#cocktail-table tr:nth-child(odd){background-color: #e0f3fc}
+#cocktail-table tr:nth-child(even){background-color: #c4b5fb}
+#cocktail-table tr:nth-child(odd){background-color: #f0ecfe}
 
 #cocktail-table th {
     padding-top: 12px;
     padding-bottom: 12px;
     text-align: left;
-    background-color: #15a3e7;
+    background-color: #1D0673;
     color: white;
 }
 
@@ -53,7 +53,8 @@ code {
 }
 
 .qr-code-text {
-    padding: 0 78px;
+    padding: 0 80px;
+    text-align: center;
     margin-bottom: 0;
     font-size: 24px;
     font-family: "Bradley Hand", cursive;
