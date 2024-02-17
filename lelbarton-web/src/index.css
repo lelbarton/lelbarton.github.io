@@ -26,6 +26,8 @@ code {
     width: 100%;
     border-collapse: collapse;
     empty-cells: show;
+    font-size: 20px;
+    font-weight: bolder;
 }
 
 #cocktail-table td, #cocktail-table th {
@@ -34,7 +36,7 @@ code {
 }
 
 #cocktail-table tr:nth-child(even){background-color: #c1d5fe}
-#cocktail-table tr:nth-child(odd){background-color: #f0f5ff}
+#cocktail-table tr:nth-child(odd){background-color: #fcfdff}
 
 #cocktail-table th {
     padding-top: 12px;
@@ -54,7 +56,7 @@ code {
 }
 
 .qr-code-text {
-    padding: 0 80px;
+    padding: 0 40px;
     text-align: center;
     margin-bottom: 0;
     font-size: 24px;
@@ -65,7 +67,7 @@ code {
 
 .qr-code {
     display: block;
-    margin-left: auto;
+    margin-left: 50px;
     margin-right: auto;
     width: 50%;
     padding-left: 50px;

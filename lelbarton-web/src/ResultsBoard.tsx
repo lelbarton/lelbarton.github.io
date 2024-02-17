@@ -6,7 +6,7 @@ import { useState } from "react";
 export function ResultsBoard() {
 
   const [accessToken, setAccessToken] = useState<string | undefined>(undefined)
-  const refreshMs = 30000
+  const refreshMs = 20000
 
   const login = useGoogleLogin({
     scope: 'https://www.googleapis.com/auth/forms https://www.googleapis.com/auth/drive https://www.googleapis.com/auth/spreadsheets',

@@ -1,4 +1,3 @@
-import { Table } from "react-bootstrap";
 import { useEffect, useState } from "react";
 
 const FORM_ID = '1w9fOFF0mFcBWlrCWAqwWbrtrRGJG_5sl-vDwDZXmj2k'
